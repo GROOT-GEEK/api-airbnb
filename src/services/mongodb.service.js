@@ -11,9 +11,8 @@ const conectarDB = async () => {
   return DB;
 }
 /**
- * 
  * @param {*} nombreColeccion 
- * @returns coleccion a consultar, se hace apraevita rescribir el mismo codigo en los  metodos
+ * @returns coleccion a consultar, se hace para evitar reescribir el mismo codigo en los metodos
  */
  const defColeccion = async (nombreColeccion) => {
   let db = await conectarDB();
@@ -24,7 +23,7 @@ const conectarDB = async () => {
 /**
  * @param {*} nombreColeccion 
  * @param {*} filtro 
- * @returns el numero de propiedades definidos en la variable DEFAULT_LIMIT_PROPERTIES 
+ * @returns el número de propiedades definidos en la variable DEFAULT_LIMIT_PROPERTIES 
  */
 const consultarDocumentos = async (nombreColeccion, filtro) => {
   let db = await conectarDB()
@@ -34,10 +33,10 @@ const consultarDocumentos = async (nombreColeccion, filtro) => {
 }
 
 /**
- * 
  * @param {String} nombreColeccion 
  * @returns tipos de propiedad
- * Documentación mongo https://www.mongodb.com/docs/manual/reference/method/db.collection.distinct/
+ * Documentación mongo:
+ * https://www.mongodb.com/docs/manual/reference/method/db.collection.distinct/
  */
  const consultar_tipo = async (nombreColeccion) => {
   let coleccion = await defColeccion(nombreColeccion);
@@ -45,7 +44,6 @@ const consultarDocumentos = async (nombreColeccion, filtro) => {
 }
 
 /**
- * 
  * @param {*} nombreColeccion 
  * @returns 20 propiedades con mayor numero de reseñas
  * Documentación mongo: 
@@ -58,4 +56,17 @@ const consultar_reseñas = async (nombreColeccion) => {
   .limit(20).toArray();// se pone el limite para que muestre solo las 20 de mayores
 }
 
-module.exports = { consultarDocumentos,consultar_tipo,consultar_reseñas }
+/** 
+ * @param {*} nombreColeccion 
+ * @returns propiedades con mayor numero de camas
+ * Documentación mongo: 
+ * .find https://www.mongodb.com/docs/manual/reference/method/db.collection.find/
+ * .sort https://www.quackit.com/mongodb/tutorial/mongodb_sort_query_results.cfm#:~:text=In%20MongoDB%2C%20you%20can%20sort,the%20results%20should%20be%20sorted.
+ */
+const consultar_camas = async (nombreColeccion,nro_camas) => {
+  let coleccion = await defColeccion(nombreColeccion);
+  return coleccion.find().sort({ beds: -1 })// -1 es para ordenar de mayor a menor 1 de < a >
+  .project({ name: 1, beds: 1, number_of_reviews: 1, price: 1 }).limit(parseInt(nro_camas)).toArray();
+}
+
+module.exports = { consultarDocumentos,consultar_tipo,consultar_reseñas,consultar_camas }

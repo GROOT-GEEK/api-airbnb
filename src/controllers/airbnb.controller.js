@@ -1,9 +1,9 @@
 
 // Importar los servicios
-const { consultarDocumentos,consultar_tipo,consultar_reseñas} = require('../services/mongodb.service');
+const { consultarDocumentos,consultar_tipo,consultar_reseñas,consultar_camas} = require('../services/mongodb.service');
 
 /**
- * metodo ya funcional de consultar el nuemro de propiedades en la variable global
+ * metodo ya funcional de consultar el numero de propiedades en la variable global
  * DEFAULT_LIMIT_PROPERTIES
  */
 const consultarAirbnb = async (req, res) => {
@@ -57,7 +57,28 @@ const consultarAirbnb = async (req, res) => {
     } catch (error) {
         console.log(error);
         respuesta.ok = false
-        respuesta.message = "Ha ocurrido un error consultando los tipos de propiedades con mas reseñas de airbnb."
+        respuesta.message = "Ha ocurrido un error consultando las propiedades con mas reseñas de airbnb."
+        respuesta.info = error
+        res.status(500).send(respuesta)
+    }
+}
+
+/**
+ * Readme 3-consulta numero de camas de cada propiedad.
+ */
+ const consultar_nro_camas= async (req, res) => {
+    let respuesta = {}
+    try {
+        respuesta.ok = true
+        respuesta.message = "mayor numero de camas de las propiedades"
+        let nro_camas = req.params["nro_beds"];
+        let resultado = await consultar_camas(process.env.COLLECTION_AIRBNB,nro_camas)
+        respuesta.info = resultado
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error);
+        respuesta.ok = false
+        respuesta.message = "Ha ocurrido un error consultando el numero de camas de las propiedades de airbnb."
         respuesta.info = error
         res.status(500).send(respuesta)
     }
@@ -67,5 +88,5 @@ const consultarAirbnb = async (req, res) => {
  * exportar modulos usados en los routers
  */
 module.exports = {
-    consultarAirbnb,consultar_tipo_propiedades,consultar_propiedades_Nreseñas
+    consultarAirbnb,consultar_tipo_propiedades,consultar_propiedades_Nreseñas,consultar_nro_camas
 }

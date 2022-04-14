@@ -34,4 +34,5 @@ Retornar por cada propiedad las siguientes propiedades
 - Documentar el código
 
 ## Respuestas de la entrega
-- Nota: se debe crear un entorno en el Postman  llamado Local con la url http://localhost:3000/api/v1 y ya en los endpoint se completa el resto de la url ejemplo en carpeta Screen Postman, doene se ve funcionalidad
+- Nota: se debe crear un entorno en el Postman  llamado Local con la url http://localhost:3000/api/v1 y ya en los endpoint se completa el resto de la url ejemplo en carpeta Screen Postman, donde se ve funcionalidad.
+
