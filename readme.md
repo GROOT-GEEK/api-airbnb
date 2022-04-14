@@ -32,3 +32,6 @@ Retornar por cada propiedad las siguientes propiedades
 - Realizar los 3 endpoints solicitados.
 - Realizar colección en el postman y subirla al repositorio.
 - Documentar el código
+
+## Respuestas de la entrega
+- Nota: se debe crear un entorno en el psotman  llamado Local con la url http://localhost:3000/api/v1 y ya en los endpoint se completa el resto de la url ejemplo en carpeta Screen Postman, doene se ve funcionalidad

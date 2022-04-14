@@ -1,8 +1,11 @@
 
-// Importar los servicio
-const { consultarDocumentos } = require('../services/mongodb.service');
+// Importar los servicios
+const { consultarDocumentos,consultar_tipo} = require('../services/mongodb.service');
 
-
+/**
+ * metodo ya funcional de consultar el nuemro de propiedades en la variable global
+ * DEFAULT_LIMIT_PROPERTIES
+ */
 const consultarAirbnb = async (req, res) => {
     let respuesta = {}
     try {
@@ -20,7 +23,30 @@ const consultarAirbnb = async (req, res) => {
     }
 }
 
+/**
+ * Readme 1-consulta tipo de propiedades
+ */
+ const consultar_tipo_propiedades= async (req, res) => {
+    let respuesta = {}
+    try {
+        respuesta.ok = true
+        respuesta.message = "listado tipo de propiedades consultado"
+        let resultado = await consultar_tipo(process.env.COLLECTION_AIRBNB)
+        respuesta.info = resultado
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error);
+        respuesta.ok = false
+        respuesta.message = "Ha ocurrido un error consultando los tipos de propiedades de airbnb."
+        respuesta.info = error
+        res.status(500).send(respuesta)
+    }
+}
+
+/**
+ * exportar modulos usados en los routers
+ */
 module.exports = {
-    consultarAirbnb
+    consultarAirbnb,consultar_tipo_propiedades
 
 }
